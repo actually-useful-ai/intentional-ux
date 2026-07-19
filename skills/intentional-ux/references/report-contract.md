@@ -51,20 +51,23 @@ positive.
 ### Static-review fixture
 
 The following complete CSS and DOM fragment has an explicit layer order, a
-single custom-property owner, valid label relationship, and one mounted ID.
-Its expected result is no finding; a reviewer must not report duplication merely
-because a selector or property name is familiar elsewhere in a codebase.
+documented custom-property owner, valid label relationship, and one mounted ID.
+It intentionally repeats `.email-control` in a higher layer so a reviewer can
+distinguish a documented cascade override from an unexamined duplicate selector.
 
 ```css
 @layer reset, components, utilities;
 @layer components {
   .email-control { --control-padding: 0.75rem; padding: var(--control-padding); }
 }
+@layer utilities {
+  .email-control { --control-padding: 0.5rem; padding: var(--control-padding); }
+}
 ```
 
 ```html
 <label for="email">Email</label>
-<input id="email" type="email">
+<input id="email" class="email-control" type="email">
 ```
 
 ```js
@@ -72,7 +75,11 @@ expect(findDuplicateIds(document)).toEqual([])
 // expected finding: none
 ```
 
-Static review should produce a causal finding only after the resolved cascade,
+Token ownership: `components` owns the `--control-padding` default; `utilities` provides the documented higher-layer override for the same mounted control.
+
+Resolved cascade: because `utilities` follows `components` in the declared layer order, its repeated `.email-control` override wins. The mounted input resolves `--control-padding` and `padding` to `0.5rem`. Expected static-review result: no finding.
+
+Static review should produce a causal finding only after this resolved cascade,
 rendered DOM, and affected task state establish a real path consequence.
 
 ### Runtime-review fixture (optional)

@@ -93,11 +93,32 @@ REQUIRED = {
 STATIC_FIXTURE = (
     "@layer reset, components, utilities;",
     "@layer components {",
+    "@layer utilities {",
+    ".email-control {",
     "--control-padding: 0.75rem;",
+    "--control-padding: 0.5rem;",
+    "padding: var(--control-padding);",
     "<label for=\"email\">Email</label>",
-    "<input id=\"email\" type=\"email\">",
+    "<input id=\"email\" class=\"email-control\" type=\"email\">",
     "expect(findDuplicateIds(document)).toEqual([])",
     "expected finding: none",
+)
+STATIC_REPEAT_OVERRIDE = re.compile(
+    r"@layer components \{\s+\.email-control \{\s+"
+    r"--control-padding: 0\.75rem;\s+padding: var\(--control-padding\);\s+\}\s+\}"
+    r"\s+@layer utilities \{\s+\.email-control \{\s+"
+    r"--control-padding: 0\.5rem;\s+padding: var\(--control-padding\);\s+\}\s+\}",
+    re.MULTILINE,
+)
+STATIC_RESOLVED_EXPECTATION = (
+    "Resolved cascade: because `utilities` follows `components` in the declared layer "
+    "order, its repeated `.email-control` override wins. The mounted input resolves "
+    "`--control-padding` and `padding` to `0.5rem`. Expected static-review result: "
+    "no finding."
+)
+STATIC_TOKEN_OWNERSHIP = (
+    "Token ownership: `components` owns the `--control-padding` default; `utilities` "
+    "provides the documented higher-layer override for the same mounted control."
 )
 RUNTIME_FIXTURE = (
     "Optional runtime review",
@@ -173,6 +194,25 @@ def main() -> None:
         for phrase in expected:
             if phrase not in content:
                 failures.append(f"{path.relative_to(ROOT)} fixture missing: {phrase!r}")
+
+    report_contract = FILES["report_contract"]
+    if report_contract.is_file():
+        content = report_contract.read_text(encoding="utf-8")
+        if not STATIC_REPEAT_OVERRIDE.search(content):
+            failures.append(
+                "skills/intentional-ux/references/report-contract.md static fixture "
+                "does not contain the intentional repeated selector/token/property override"
+            )
+        if STATIC_RESOLVED_EXPECTATION not in content:
+            failures.append(
+                "skills/intentional-ux/references/report-contract.md static fixture "
+                "does not document the mounted-input cascade resolution and no-finding expectation"
+            )
+        if STATIC_TOKEN_OWNERSHIP not in content:
+            failures.append(
+                "skills/intentional-ux/references/report-contract.md static fixture "
+                "does not document custom-property ownership for the repeated override"
+            )
 
     for path in ROOT.rglob("*.md"):
         content = path.read_text(encoding="utf-8")
