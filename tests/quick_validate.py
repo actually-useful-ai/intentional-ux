@@ -19,6 +19,8 @@ README_FRONTEND_INTEGRITY = (
 )
 TUPLE = "person/input mode -> start -> outcome -> success evidence"
 README_CONTRACT = (
+    "latency between intention and outcome",
+    "helps product teams, designers, and frontend developers",
     TUPLE,
     "| Completion |",
     "| Hit |",
@@ -33,6 +35,10 @@ README_CONTRACT = (
     "| Observed |",
     "| Assumed |",
     "## Worked example: checkout",
+    "Before: returning customer/keyboard -> cart -> payment details -> submitted order -> order number is visible and announced",
+    "After:  returning customer/keyboard -> cart -> payment details and order review -> submitted order -> order number is visible and announced",
+    "Preserved: discovery, keyboard access, recovery, user control, correction route, and success evidence",
+    "Changed: Surface competition decreases; confirmation remains; Fitts and wait stay unknown until measured.",
     "## Recommendation record",
     "| Affected people |",
     "| Outcome delay |",
@@ -44,12 +50,23 @@ README_CONTRACT = (
     "Route semantic and assistive-technology compliance to an accessibility review.",
     "## Prompts to try",
     "## Repository map",
+    "## Scope",
+    "## Contributing",
+    "## License",
     "## Validate a checkout",
     "python3 tests/quick_validate.py",
     "python3 /Users/luke/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py .",
     "mkdir -p \"$HOME/.agents/skills\"",
     "if [ -e \"$HOME/.agents/skills/intentional-ux\" ] || [ -L \"$HOME/.agents/skills/intentional-ux\" ]; then",
     "ln -s \"$PWD/skills/intentional-ux\" \"$HOME/.agents/skills/intentional-ux\"",
+)
+DIRECT_INSTALL_GUARD = re.compile(
+    r'if \[ -e "\$HOME/\.agents/skills/intentional-ux" \] \|\| '
+    r'\[ -L "\$HOME/\.agents/skills/intentional-ux" \]; then\s+'
+    r'echo "intentional-ux is already installed; leaving it unchanged"\s+else\s+'
+    r'ln -s "\$PWD/skills/intentional-ux" '
+    r'"\$HOME/\.agents/skills/intentional-ux"\s+fi',
+    re.MULTILINE,
 )
 README_PROMPTS = (
     "Map the keyboard checkout path for a returning customer and identify where success evidence becomes uncertain.",
@@ -285,6 +302,10 @@ def main() -> None:
         for banned in README_HUMANIZE_BANS:
             if banned in readme:
                 failures.append(f"README.md contains disallowed editorial construction: {banned!r}")
+        if not DIRECT_INSTALL_GUARD.search(readme):
+            failures.append("README.md must place ln -s in the guarded install else branch")
+        if re.search(r"\bcodex\s+plugin\b", readme, re.IGNORECASE):
+            failures.append("README.md must not claim a universal codex plugin CLI command")
 
     for name, path in FILES.items():
         if not path.is_file():

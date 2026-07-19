@@ -1,8 +1,6 @@
 # Intentional UX
 
-Intentional UX examines the time and effort between a person's intention and
-their confirmed outcome. It turns a journey into an inspectable task path, names
-avoidable interaction cost, and ties a recommendation back to its evidence.
+Intentional UX examines the latency between intention and outcome. It helps product teams, designers, and frontend developers turn a journey into an inspectable task path, name avoidable interaction cost, and tie a recommendation back to its evidence.
 
 Start with the task. Measure its path. Record the trade-offs. The deeper
 implementation detail lives in the linked references.
@@ -85,6 +83,13 @@ for order submission, and a recovery route if the service rejects the card.
 The order number is the success evidence. A quiet page refresh after submission
 would leave completion uncertain even if the request succeeded.
 
+```text
+Before: returning customer/keyboard -> cart -> payment details -> submitted order -> order number is visible and announced
+After:  returning customer/keyboard -> cart -> payment details and order review -> submitted order -> order number is visible and announced
+Preserved: discovery, keyboard access, recovery, user control, correction route, and success evidence
+Changed: Surface competition decreases; confirmation remains; Fitts and wait stay unknown until measured.
+```
+
 | Measure | Finding | Evidence |
 | --- | --- | --- |
 | Completion | Unknown until the customer can see and hear the order number. | Observed |
@@ -92,9 +97,9 @@ would leave completion uncertain even if the request succeeded.
 | Fitts | Omit the calculation until measurement captures target distance and effective width. | Assumed |
 | Cognitive | A vague error message forces the customer to infer which field needs repair. | Observed |
 | Wait | Submission blocks the next useful action; timing has not been recorded. | Assumed |
-| Recovery | Card rejection should return focus to the error summary and preserve entered data. | Observed |
+| Recovery | Proposed focus restoration after card rejection should preserve entered data. | Assumed |
 | Surface | Keep the payment details visible while removing unrelated promotional controls. | Assumed |
-| Accessibility | The error summary and order number need keyboard and assistive-technology paths. | Observed |
+| Accessibility | Keyboard and assistive-technology paths require review. | Assumed |
 | Integrity | A duplicate charge risk makes the confirmation and repeat-submit guard necessary. | Observed |
 
 Route semantic and assistive-technology compliance to an accessibility review.
@@ -146,6 +151,22 @@ full recommendation fields, fixtures, and review controls.
 | `skills/intentional-ux/references/frontend-integrity.md` | Causal inspection of frontend conditions. |
 | `skills/intentional-ux/references/report-contract.md` | Recommendation fields and static or runtime fixtures. |
 | `tests/fixtures/` | Checkout and editor review examples. |
+
+## Scope
+
+Use this package to review task paths, interaction cost, evidence, and
+frontend conditions that change a person's route to a confirmed outcome. It
+does not replace accessibility compliance review, product research, or a
+decision about integrity trade-offs.
+
+## Contributing
+
+Keep proposed changes traceable to a task tuple, evidence level, and success
+evidence. Run the validation commands before opening a pull request.
+
+## License
+
+Luke has not selected a license for this repository.
 
 ## Validate a checkout
 
