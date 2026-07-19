@@ -75,13 +75,17 @@ and interpretation limits.
 
 ## Worked example: checkout
 
+This is an illustrative scenario, not a report from a real inspected interface.
+Its details are example inputs. Treat each proposed finding as a hypothesis
+until the stated observation or test validates it.
+
 **Task tuple:** returning customer/keyboard -> cart -> submitted order -> order
 number is visible and announced
 
-The current graph has an address edit, a required payment confirmation, a wait
-for order submission, and a recovery route if the service rejects the card.
-The order number is the success evidence. A quiet page refresh after submission
-would leave completion uncertain even if the request succeeded.
+Assume this path has an address edit, a payment confirmation, a wait for order
+submission, and a recovery route if the service rejects the card. The example
+uses the order number as success evidence. A quiet page refresh would leave
+completion uncertain even if the request succeeded.
 
 ```text
 Before: returning customer/keyboard -> cart -> payment details -> submitted order -> order number is visible and announced
@@ -92,15 +96,15 @@ Changed: Proposed surface competition reduction is Assumed pending observation; 
 
 | Measure | Finding | Evidence |
 | --- | --- | --- |
-| Completion | Unknown until the customer can see and hear the order number. | Observed |
-| Hit | The required confirmation remains; an extra repeated submit is redundant. | Observed |
-| Fitts | Omit the calculation until measurement captures target distance and effective width. | Assumed |
-| Cognitive | A vague error message forces the customer to infer which field needs repair. | Observed |
-| Wait | Submission blocks the next useful action; timing has not been recorded. | Assumed |
-| Recovery | Proposed focus restoration after card rejection should preserve entered data. | Assumed |
-| Surface | Keep the payment details visible while removing unrelated promotional controls. | Assumed |
-| Accessibility | Keyboard and assistive-technology paths require review. | Assumed |
-| Integrity | A duplicate charge risk makes the confirmation and repeat-submit guard necessary. | Observed |
+| Completion | Hypothesis: the task remains incomplete until the customer sees and hears the order number. Validate by completing the keyboard path and checking its visible and announced result. | Assumed |
+| Hit | Hypothesis: a repeated submission is redundant while payment confirmation remains necessary. Validate by observing action sequences and submission logs during checkout tests. | Assumed |
+| Fitts | Target geometry is absent from the example input; no calculation. | Observed (example input) |
+| Cognitive | Hypothesis: vague error copy makes the customer infer which field needs repair. Validate by inspecting the rendered copy and observing correction attempts in task sessions. | Assumed |
+| Wait | Hypothesis: submission blocks the next useful action. Validate by timing the interval from submit activation to available success evidence or recovery. | Assumed |
+| Recovery | Hypothesis: focus restoration after card rejection preserves the keyboard path and entered data. Validate by triggering a rejection and checking focus, retained values, and successful retry. | Assumed |
+| Surface | Hypothesis: removing unrelated promotions reduces competition without hiding payment details. Validate by comparing control discovery and task completion before and after the proposed change. | Assumed |
+| Accessibility | Hypothesis: the error summary and order number need verified keyboard and assistive-technology paths. Validate by testing focus order, error navigation, and announcement with the relevant input modes. | Assumed |
+| Integrity | Hypothesis: a repeat-submit guard prevents duplicate-charge risk. Validate by testing idempotent submission and reviewing transaction records after repeated activation. | Assumed |
 
 Route semantic and assistive-technology compliance to an accessibility review.
 Return the resulting barriers and alternate paths to the task graph, then update

@@ -22,24 +22,9 @@ README_CONTRACT = (
     "latency between intention and outcome",
     "helps product teams, designers, and frontend developers",
     TUPLE,
-    "| Completion |",
-    "| Hit |",
-    "| Fitts |",
-    "| Cognitive |",
-    "| Wait |",
-    "| Recovery |",
-    "| Surface |",
-    "| Accessibility |",
-    "| Integrity |",
     "| Measured |",
     "| Observed |",
     "| Assumed |",
-    "## Worked example: checkout",
-    "Before: returning customer/keyboard -> cart -> payment details -> submitted order -> order number is visible and announced",
-    "After:  returning customer/keyboard -> cart -> payment details and order review -> submitted order -> order number is visible and announced",
-    "Preserved: Unverified acceptance requirement: verify discovery, keyboard access, recovery, user control, correction route, and success evidence before accepting this change.",
-    "Changed: Proposed surface competition reduction is Assumed pending observation; confirmation remains; Fitts and wait stay unknown until measured.",
-    "## Recommendation record",
     "| Affected people |",
     "| Outcome delay |",
     "| Evidence |",
@@ -48,17 +33,31 @@ README_CONTRACT = (
     "| Remediation |",
     "| Verification |",
     "Route semantic and assistive-technology compliance to an accessibility review.",
-    "## Prompts to try",
-    "## Repository map",
-    "## Scope",
-    "## Contributing",
-    "## License",
-    "## Validate a checkout",
-    "python3 tests/quick_validate.py",
-    "python3 /Users/luke/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py .",
-    "mkdir -p \"$HOME/.agents/skills\"",
-    "if [ -e \"$HOME/.agents/skills/intentional-ux\" ] || [ -L \"$HOME/.agents/skills/intentional-ux\" ]; then",
-    "ln -s \"$PWD/skills/intentional-ux\" \"$HOME/.agents/skills/intentional-ux\"",
+)
+README_SECTIONS = (
+    "Measure the path",
+    "Worked example: checkout",
+    "Recommendation record",
+    "Prompts to try",
+    "Repository map",
+    "Scope",
+    "Contributing",
+    "License",
+    "Validate a checkout",
+    "Add to Codex",
+    "Add to Claude Code",
+)
+NO_COMBINED_SCORE = re.compile(
+    r"(?:rather than|do not|never)[^.\n]*(?:combined|single|synthetic)[^.\n]*score",
+    re.IGNORECASE,
+)
+FITTS_MEASUREMENT_GUARD = re.compile(
+    r"\|\s*Fitts\s*\|[^\n]*only when[^\n]*distance[^\n]*effective target width[^\n]*measured",
+    re.IGNORECASE,
+)
+ILLUSTRATIVE_EXAMPLE = re.compile(
+    r"\billustrative\b[^.]*\bnot\b[^.]*\b(?:real|inspected)\b[^.]*\binterface\b",
+    re.IGNORECASE,
 )
 DIRECT_INSTALL_GUARD = re.compile(
     r'if \[ -e "\$HOME/\.agents/skills/intentional-ux" \] \|\| '
@@ -74,7 +73,6 @@ README_PROMPTS = (
     "Inspect dialog focus restoration after a failed destructive action and write a causal finding only if the task path changes.",
 )
 README_HUMANIZE_BANS = (
-    "—",
     "AI-powered",
     "AI-enhanced",
     "AI-driven",
@@ -234,6 +232,25 @@ SCENARIO_ELEMENTS = (
 )
 
 
+def markdown_section(content: str, heading: str) -> str:
+    match = re.search(
+        rf"^## {re.escape(heading)}\s*$\n(.*?)(?=^##\s|\Z)",
+        content,
+        re.MULTILINE | re.DOTALL,
+    )
+    return match.group(1) if match else ""
+
+
+def markdown_table_rows(section: str) -> dict[str, tuple[str, str]]:
+    rows = {}
+    for line in section.splitlines():
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if len(cells) != 3 or cells[0] in {"Measure", "---"}:
+            continue
+        rows[cells[0]] = (cells[1], cells[2])
+    return rows
+
+
 def main() -> None:
     failures = []
 
@@ -302,6 +319,47 @@ def main() -> None:
         for banned in README_HUMANIZE_BANS:
             if banned in readme:
                 failures.append(f"README.md contains disallowed editorial construction: {banned!r}")
+
+        sections = {heading: markdown_section(readme, heading) for heading in README_SECTIONS}
+        for heading, content in sections.items():
+            if not content:
+                failures.append(f"README.md missing or empty section: {heading!r}")
+
+        measure_section = sections["Measure the path"]
+        measure_rows = markdown_table_rows(measure_section)
+        worked_section = sections["Worked example: checkout"]
+        worked_rows = markdown_table_rows(worked_section)
+        for metric in METRICS:
+            if metric not in measure_rows:
+                failures.append(f"README.md measure vector missing label: {metric}")
+            if metric not in worked_rows:
+                failures.append(f"README.md worked example missing vector row: {metric}")
+        if not NO_COMBINED_SCORE.search(measure_section):
+            failures.append("README.md must reject a combined UX score")
+        if not FITTS_MEASUREMENT_GUARD.search(measure_section):
+            failures.append("README.md must guard Fitts calculation on measured geometry")
+        if not ILLUSTRATIVE_EXAMPLE.search(worked_section):
+            failures.append("README.md checkout example must be illustrative, not a real inspection")
+
+        for metric in ("Completion", "Hit", "Cognitive", "Wait", "Recovery", "Surface", "Accessibility", "Integrity"):
+            finding, evidence = worked_rows.get(metric, ("", ""))
+            if evidence != "Assumed":
+                failures.append(f"README.md illustrative {metric} row must use Assumed evidence")
+            if not re.search(r"\bvalidate by\b", finding, re.IGNORECASE):
+                failures.append(f"README.md Assumed {metric} row needs an explicit validation clause")
+        fitts_finding, fitts_evidence = worked_rows.get("Fitts", ("", ""))
+        if not fitts_evidence.startswith("Observed"):
+            failures.append("README.md illustrative Fitts row must use Observed example-input evidence")
+        if not re.search(r"geometry is absent.*no calculation", fitts_finding, re.IGNORECASE):
+            failures.append("README.md illustrative Fitts row must state absent geometry and no calculation")
+
+        validation_section = sections["Validate a checkout"]
+        for command in (
+            "python3 tests/quick_validate.py",
+            "python3 /Users/luke/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py .",
+        ):
+            if command not in validation_section:
+                failures.append(f"README.md validation section missing command: {command!r}")
         if not DIRECT_INSTALL_GUARD.search(readme):
             failures.append("README.md must place ln -s in the guarded install else branch")
         if re.search(r"\bcodex\s+plugin\b", readme, re.IGNORECASE):
