@@ -2,10 +2,15 @@
 """Fast structural checks for the Intentional UX skill contract and scenarios."""
 
 from pathlib import Path
+import json
 import re
 
 
 ROOT = Path(__file__).resolve().parents[1]
+README = ROOT / "README.md"
+CODEX_MANIFEST = ROOT / ".codex-plugin/plugin.json"
+CLAUDE_MANIFEST = ROOT / ".claude-plugin/plugin.json"
+MARKETPLACE = ROOT / ".claude-plugin/marketplace.json"
 FILES = {
     "skill": ROOT / "skills/intentional-ux/SKILL.md",
     "frontend_integrity": ROOT / "skills/intentional-ux/references/frontend-integrity.md",
@@ -164,6 +169,51 @@ SCENARIO_ELEMENTS = (
 
 def main() -> None:
     failures = []
+
+    manifests = {}
+    for name, path in (
+        ("Codex manifest", CODEX_MANIFEST),
+        ("Claude manifest", CLAUDE_MANIFEST),
+        ("marketplace", MARKETPLACE),
+    ):
+        try:
+            manifests[name] = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as error:
+            failures.append(f"{name} is missing or invalid JSON: {error}")
+
+    codex = manifests.get("Codex manifest", {})
+    claude = manifests.get("Claude manifest", {})
+    marketplace = manifests.get("marketplace", {})
+    marketplace_plugins = marketplace.get("plugins", [])
+    marketplace_plugin = marketplace_plugins[0] if len(marketplace_plugins) == 1 else {}
+    if len(marketplace_plugins) != 1:
+        failures.append("marketplace must contain exactly one plugin")
+    for field in ("name", "version", "description"):
+        values = {
+            "Codex manifest": codex.get(field),
+            "Claude manifest": claude.get(field),
+            "marketplace plugin": marketplace_plugin.get(field),
+        }
+        if len(set(values.values())) != 1 or None in values.values():
+            failures.append(f"manifest {field} values do not match: {values}")
+    default_prompt = codex.get("interface", {}).get("defaultPrompt")
+    if not (
+        isinstance(default_prompt, list)
+        and default_prompt
+        and all(isinstance(prompt, str) and prompt.strip() for prompt in default_prompt)
+    ):
+        failures.append("Codex interface.defaultPrompt must be a non-empty string array")
+    if marketplace_plugin.get("source") != "./":
+        failures.append("marketplace plugin source must be './'")
+
+    try:
+        readme = README.read_text(encoding="utf-8")
+    except OSError as error:
+        failures.append(f"README.md is missing: {error}")
+    else:
+        if "will be added in a later change" in readme:
+            failures.append("README.md still claims the substantive skill is future work")
+
     for name, path in FILES.items():
         if not path.is_file():
             failures.append(f"missing {path.relative_to(ROOT)}")

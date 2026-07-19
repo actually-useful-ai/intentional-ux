@@ -1,7 +1,7 @@
 {
   "name": "intentional-ux",
   "version": "0.1.0",
-  "description": "Guidance for deliberate, human-centered experience design.",
+  "description": "Analyze intention-to-outcome task paths and reduce avoidable interaction cost.",
   "author": {
     "name": "Luke Steuber"
   }
