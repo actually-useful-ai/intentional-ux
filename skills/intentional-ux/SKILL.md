@@ -57,6 +57,22 @@ Fewer visible controls improve surface economy only when discovery, keyboard
 access, recovery, and user control remain equal or better. A smaller surface is
 not, by itself, a better experience.
 
+## Inspect frontend integrity
+
+Inspect the CSS, DOM, event, focus, state, and token evidence that may explain a
+cost in a task path. Create a causal finding only when the available evidence
+connects an implementation condition to a changed task state or success
+evidence; otherwise record the uncertainty. Use the
+[frontend integrity](references/frontend-integrity.md) reference for the checks
+and handoffs.
+
+## Use the report contract
+
+Write each recommendation so a person can trace it from evidence to an affected
+task path, remediation, and verification. The
+[report contract](references/report-contract.md) defines the required fields,
+surface-preserving before/after paths, and static and optional runtime fixtures.
+
 ## Attribution
 
 Created by Luke Steuber.
