@@ -86,8 +86,8 @@ would leave completion uncertain even if the request succeeded.
 ```text
 Before: returning customer/keyboard -> cart -> payment details -> submitted order -> order number is visible and announced
 After:  returning customer/keyboard -> cart -> payment details and order review -> submitted order -> order number is visible and announced
-Preserved: discovery, keyboard access, recovery, user control, correction route, and success evidence
-Changed: Surface competition decreases; confirmation remains; Fitts and wait stay unknown until measured.
+Preserved: Unverified acceptance requirement: verify discovery, keyboard access, recovery, user control, correction route, and success evidence before accepting this change.
+Changed: Proposed surface competition reduction is Assumed pending observation; confirmation remains; Fitts and wait stay unknown until measured.
 ```
 
 | Measure | Finding | Evidence |
