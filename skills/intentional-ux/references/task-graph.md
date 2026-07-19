@@ -1,8 +1,9 @@
 # Task graph
 
 Create one graph per task tuple when people or input modes materially change the
-route. A graph has named states and directed transitions; it should make both
-completion and non-completion paths inspectable.
+route. Use `person/input mode -> start -> outcome -> success evidence` to name
+the task before graphing it. A graph has named states and directed transitions;
+it should make both completion and non-completion paths inspectable.
 
 ## States to consider
 
@@ -15,9 +16,9 @@ completion and non-completion paths inspectable.
 | Corrective | The person reverses, edits, or retries after a mismatch. |
 | Recovery | The person returns from an error, interruption, or lost context. |
 | Context switch | The task requires leaving the current context, tool, or modality. |
-| Outcome | The intended outcome occurs. |
+| Outcome | The named outcome occurs. |
 | Success evidence | The person can observe or obtain evidence that the outcome occurred. |
-| Abandonment | The person exits or pauses without the intended outcome. |
+| Abandonment | The person exits or pauses without the named outcome. |
 
 ## Hit categories
 
@@ -26,7 +27,7 @@ different roles in different task paths.
 
 | Category | Meaning |
 | --- | --- |
-| Required | Necessary to reach the intended outcome in the supported path. |
+| Required | Necessary to reach the named outcome in the supported path. |
 | Redundant | Does not advance the task, duplicate a completed action, or is avoidable. |
 | Corrective | Repairs a wrong, incomplete, or misunderstood action. |
 | Confirmation | Verifies a consequential action before or after it takes effect. |

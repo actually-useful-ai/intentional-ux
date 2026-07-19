@@ -1,12 +1,12 @@
 ---
 name: intentional-ux
-description: Use when evaluating or redesigning an interface flow where a person's intended outcome, inputs, evidence of success, and avoidable interaction cost need to be made explicit.
+description: Use when evaluating or redesigning an interface flow where a person's goal, inputs, evidence of success, and avoidable interaction cost need to be made explicit.
 ---
 
 # Intentional UX
 
 Analyze an experience as a path from a person's intention to evidence that the
-intended outcome occurred. Prefer evidence over impressions, and preserve
+named outcome occurred. Prefer evidence over impressions, and preserve
 uncertainty rather than compressing it into a single UX score.
 
 ## Start with a task
@@ -14,7 +14,7 @@ uncertainty rather than compressing it into a single UX score.
 State one tuple for each materially different person or input mode:
 
 ```
-person/input mode -> start -> intended outcome -> success evidence
+person/input mode -> start -> outcome -> success evidence
 ```
 
 Examples of input mode include touch, pointer, keyboard, voice, and switch

@@ -31,7 +31,7 @@ and assistive-technology compliance to accessibility review.
 
 For each scenario, the analysis must include:
 
-- a `person/input mode -> start -> intended outcome -> success evidence` tuple;
+- a `person/input mode -> start -> outcome -> success evidence` tuple;
 - a state graph with normal, wait, confirmation, corrective, recovery, and
   context-switch paths where applicable;
 - a metric vector rather than a single UX score;
@@ -43,14 +43,5 @@ For each scenario, the analysis must include:
   only when discovery, keyboard access, recovery, and user control remain equal
   or better.
 
-## Post-skill recheck
-
-**Scenario 1: pass.** The checkout analysis now separates express purchase from
-the shipping-and-payment path by person and input mode, models confirmation and
-recovery paths, preserves integrity trade-offs, and requires person-visible
-purchase evidence before declaring completion.
-
-**Scenario 2: pass.** The editor analysis now compares touch, keyboard, and
-switch-access task tuples, records gesture discovery and context-switch costs,
-allows a Fitts value only after geometry is measured, and routes semantic and
-assistive-technology questions to accessibility review.
+The reproducible post-skill analyses are
+`scenario-1-checkout.md` and `scenario-2-editor.md` in this fixture directory.
