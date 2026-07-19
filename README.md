@@ -1,25 +1,160 @@
 # Intentional UX
 
-Intentional UX analyzes the latency between a person's intention and a confirmed
-outcome. It turns a product journey into a task path, identifies avoidable
-interaction cost, and makes recommendations that remain traceable to evidence.
+Intentional UX examines the time and effort between a person's intention and
+their confirmed outcome. It turns a journey into an inspectable task path, names
+avoidable interaction cost, and ties a recommendation back to its evidence.
 
-## What it evaluates
+Start with the task. Measure its path. Record the trade-offs. The deeper
+implementation detail lives in the linked references.
 
-Each review considers a vector of related concerns instead of hiding trade-offs
-inside one score:
+## Reading path
 
-- completion and success evidence;
-- hit count and corrective interactions;
-- Fitts's law when target distance and effective width are measured;
-- cognitive load, waits, context switches, and recovery cost;
-- surface economy without sacrificing discovery or control;
-- accessibility across relevant people and input modes; and
-- integrity across accuracy, reversibility, consent, privacy, and consequences of error.
+1. Name the task tuple and sketch its states.
+2. Report the metric vector with an evidence level for every claim.
+3. Compare the current path with a proposed change, including recovery and
+   success evidence.
+4. Write an accountable recommendation and verify it against the named task.
+
+## Start with a task
+
+Use one tuple for each person or input mode when the route changes:
+
+```text
+person/input mode -> start -> outcome -> success evidence
+```
+
+Success evidence is what the person can observe to know the outcome occurred.
+A completed request without visible confirmation may leave the task incomplete.
+
+Build a state graph after naming the tuple. Include the ordinary route and any
+action, wait, confirmation, corrective, recovery, context-switch, outcome,
+success-evidence, or abandonment states that change effort or completion. Keep
+recovery separate from correction: recovery returns a person to a usable path;
+correction fixes content or a choice. The [task graph
+reference](skills/intentional-ux/references/task-graph.md) covers the state and
+hit categories in detail.
+
+## Measure the path
+
+Report a vector rather than a combined UX score. Different measures expose
+different costs and trade-offs.
+
+| Measure | Record | Limit |
+| --- | --- | --- |
+| Completion | Outcome reached and success evidence obtained for the task tuple. | A system action alone may not complete the person's task. |
+| Hit | Required, redundant, corrective, and confirmation interactions. | Compare categories instead of treating every interaction alike. |
+| Fitts | `log2(D/W + 1)` in bits. | Calculate it only when distance `D` and effective target width `W` are measured. |
+| Cognitive | Decisions, memory demands, interpretation burden, and mode changes. | Do not infer it from hit count alone. |
+| Wait | Duration and frequency of blocked or unproductive waiting. | Separate delay from voluntary reading or deliberation. |
+| Recovery | Error, interruption, and lost-context paths. | A rare severe failure can outweigh its average rate. |
+| Surface | Visible controls, hierarchy, and visual competition. | Fewer controls help only when discovery, keyboard access, recovery, and user control remain equal or better. |
+| Accessibility | Barriers and alternate paths by input mode. | Bring alternate routes back into the task graph. |
+| Integrity | Accuracy, reversibility, consent, privacy, and consequences of error. | Do not trade integrity away merely to reduce time or hits. |
+
+Review integrity across accuracy, reversibility, consent, privacy, and consequences of error.
 
 Frontend integrity is a separate causal inspection of CSS, DOM, events, focus, and state.
-It is used to connect implementation conditions to task-path costs without
-redefining the Integrity metric.
+It connects an implementation condition to a task-path cost without redefining
+the Integrity metric. Inspect a condition only when the evidence connects it to
+an affected state or success evidence. See [frontend
+integrity](skills/intentional-ux/references/frontend-integrity.md) for the
+inspection boundary.
+
+## State the evidence
+
+Every finding gets one evidence level. Keep unknowns visible.
+
+| Level | Basis | Use it when |
+| --- | --- | --- |
+| Measured | Instrumentation, timed observation, controlled test, or recorded dimensions. | The value has direct supporting data. |
+| Observed | Research session, inspection, or documented evaluation. | The route or condition was seen without a complete metric. |
+| Assumed | A plausible hypothesis without direct support. | The report says what would validate it. |
+
+Do not present an assumed value as measured. Put Fitts's law in the report
+after measurement captures the relevant geometry. The [measurement
+reference](skills/intentional-ux/references/measurement.md) defines the units
+and interpretation limits.
+
+## Worked example: checkout
+
+**Task tuple:** returning customer/keyboard -> cart -> submitted order -> order
+number is visible and announced
+
+The current graph has an address edit, a required payment confirmation, a wait
+for order submission, and a recovery route if the service rejects the card.
+The order number is the success evidence. A quiet page refresh after submission
+would leave completion uncertain even if the request succeeded.
+
+| Measure | Finding | Evidence |
+| --- | --- | --- |
+| Completion | Unknown until the customer can see and hear the order number. | Observed |
+| Hit | The required confirmation remains; an extra repeated submit is redundant. | Observed |
+| Fitts | Omit the calculation until measurement captures target distance and effective width. | Assumed |
+| Cognitive | A vague error message forces the customer to infer which field needs repair. | Observed |
+| Wait | Submission blocks the next useful action; timing has not been recorded. | Assumed |
+| Recovery | Card rejection should return focus to the error summary and preserve entered data. | Observed |
+| Surface | Keep the payment details visible while removing unrelated promotional controls. | Assumed |
+| Accessibility | The error summary and order number need keyboard and assistive-technology paths. | Observed |
+| Integrity | A duplicate charge risk makes the confirmation and repeat-submit guard necessary. | Observed |
+
+Route semantic and assistive-technology compliance to an accessibility review.
+Return the resulting barriers and alternate paths to the task graph, then update
+the recommendation and its verification.
+
+## Recommendation record
+
+Each recommendation follows this record. It keeps the finding tied to people,
+evidence, and an observable outcome.
+
+| Field | Include |
+| --- | --- |
+| Affected people | The task tuple, input modes, and people whose route changes. |
+| Outcome delay | Time, extra transitions, blocked progress, lost success evidence, or integrity risk; use `unknown` when unmeasured. |
+| Evidence | Concrete source, observation, and level: Measured, Observed, or Assumed. |
+| Confidence | High, medium, or low, plus what would change it. |
+| Causal finding | `evidence -> implementation condition -> affected task state -> outcome delay or risk` |
+| Remediation | The smallest accountable change, including ownership across design, frontend, or accessibility work. |
+| Verification | An acceptance check against the stated success evidence for the listed people and input modes. |
+
+For a control reduction, preserve a before-and-after path:
+
+```text
+Before: person/input mode -> start -> action and discovery route -> outcome -> success evidence
+After:  person/input mode -> start -> action and discovery route -> outcome -> success evidence
+Preserved: discovery, keyboard access, recovery, user control, correction route, and success evidence
+Changed: metric-vector components, integrity trade-off, and unknowns
+```
+
+If discovery, keyboard access, recovery, or user control worsens, record the
+regression instead of claiming a surface benefit. The [report
+contract](skills/intentional-ux/references/report-contract.md) supplies the
+full recommendation fields, fixtures, and review controls.
+
+## Prompts to try
+
+- Map the keyboard checkout path for a returning customer and identify where success evidence becomes uncertain.
+- Compare a visible formatting menu with a swipe gesture for a touch and keyboard task path.
+- Inspect dialog focus restoration after a failed destructive action and write a causal finding only if the task path changes.
+
+## Repository map
+
+| Path | Use |
+| --- | --- |
+| `skills/intentional-ux/SKILL.md` | The concise review workflow. |
+| `skills/intentional-ux/references/task-graph.md` | States, transitions, and hit categories. |
+| `skills/intentional-ux/references/measurement.md` | Vector definitions, units, and evidence limits. |
+| `skills/intentional-ux/references/frontend-integrity.md` | Causal inspection of frontend conditions. |
+| `skills/intentional-ux/references/report-contract.md` | Recommendation fields and static or runtime fixtures. |
+| `tests/fixtures/` | Checkout and editor review examples. |
+
+## Validate a checkout
+
+Run the structural checks and plugin validation from the repository root:
+
+```sh
+python3 tests/quick_validate.py
+python3 /Users/luke/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py .
+```
 
 ## Add to Codex
 

@@ -17,6 +17,51 @@ README_INTEGRITY_METRIC = (
 README_FRONTEND_INTEGRITY = (
     "Frontend integrity is a separate causal inspection of CSS, DOM, events, focus, and state."
 )
+TUPLE = "person/input mode -> start -> outcome -> success evidence"
+README_CONTRACT = (
+    TUPLE,
+    "| Completion |",
+    "| Hit |",
+    "| Fitts |",
+    "| Cognitive |",
+    "| Wait |",
+    "| Recovery |",
+    "| Surface |",
+    "| Accessibility |",
+    "| Integrity |",
+    "| Measured |",
+    "| Observed |",
+    "| Assumed |",
+    "## Worked example: checkout",
+    "## Recommendation record",
+    "| Affected people |",
+    "| Outcome delay |",
+    "| Evidence |",
+    "| Confidence |",
+    "| Causal finding |",
+    "| Remediation |",
+    "| Verification |",
+    "Route semantic and assistive-technology compliance to an accessibility review.",
+    "## Prompts to try",
+    "## Repository map",
+    "## Validate a checkout",
+    "python3 tests/quick_validate.py",
+    "python3 /Users/luke/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py .",
+    "mkdir -p \"$HOME/.agents/skills\"",
+    "if [ -e \"$HOME/.agents/skills/intentional-ux\" ] || [ -L \"$HOME/.agents/skills/intentional-ux\" ]; then",
+    "ln -s \"$PWD/skills/intentional-ux\" \"$HOME/.agents/skills/intentional-ux\"",
+)
+README_PROMPTS = (
+    "Map the keyboard checkout path for a returning customer and identify where success evidence becomes uncertain.",
+    "Compare a visible formatting menu with a swipe gesture for a touch and keyboard task path.",
+    "Inspect dialog focus restoration after a failed destructive action and write a causal finding only if the task path changes.",
+)
+README_HUMANIZE_BANS = (
+    "—",
+    "AI-powered",
+    "AI-enhanced",
+    "AI-driven",
+)
 FILES = {
     "skill": ROOT / "skills/intentional-ux/SKILL.md",
     "frontend_integrity": ROOT / "skills/intentional-ux/references/frontend-integrity.md",
@@ -27,7 +72,6 @@ FILES = {
     "checkout": ROOT / "tests/fixtures/scenario-1-checkout.md",
     "editor": ROOT / "tests/fixtures/scenario-2-editor.md",
 }
-TUPLE = "person/input mode -> start -> outcome -> success evidence"
 METRICS = (
     "Completion",
     "Hit",
@@ -232,6 +276,15 @@ def main() -> None:
             failures.append(
                 "README.md must not conflate frontend integrity with the Integrity metric"
             )
+        for phrase in README_CONTRACT:
+            if phrase not in readme:
+                failures.append(f"README.md missing field-guide contract: {phrase!r}")
+        for prompt in README_PROMPTS:
+            if prompt not in readme:
+                failures.append(f"README.md missing example prompt: {prompt!r}")
+        for banned in README_HUMANIZE_BANS:
+            if banned in readme:
+                failures.append(f"README.md contains disallowed editorial construction: {banned!r}")
 
     for name, path in FILES.items():
         if not path.is_file():
