@@ -2,6 +2,9 @@
   "name": "intentional-ux",
   "version": "0.1.0",
   "description": "Analyze intention-to-outcome task paths and reduce avoidable interaction cost.",
+  "license": "MIT",
+  "homepage": "https://github.com/actually-useful-ai/intentional-ux",
+  "repository": "https://github.com/actually-useful-ai/intentional-ux",
   "author": {
     "name": "Luke Steuber"
   }

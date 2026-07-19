@@ -11,6 +11,8 @@ README = ROOT / "README.md"
 CODEX_MANIFEST = ROOT / ".codex-plugin/plugin.json"
 CLAUDE_MANIFEST = ROOT / ".claude-plugin/plugin.json"
 MARKETPLACE = ROOT / ".claude-plugin/marketplace.json"
+LICENSE = ROOT / "LICENSE"
+REPOSITORY_URL = "https://github.com/actually-useful-ai/intentional-ux"
 README_INTEGRITY_METRIC = (
     "integrity across accuracy, reversibility, consent, privacy, and consequences of error."
 )
@@ -289,6 +291,24 @@ def main() -> None:
         failures.append("Codex interface.defaultPrompt must be a non-empty string array")
     if marketplace_plugin.get("source") != "./":
         failures.append("marketplace plugin source must be './'")
+    for name, manifest in (("Codex manifest", codex), ("Claude manifest", claude)):
+        if manifest.get("license") != "MIT":
+            failures.append(f"{name} license must be MIT")
+        if manifest.get("homepage") != REPOSITORY_URL:
+            failures.append(f"{name} homepage must be {REPOSITORY_URL}")
+        if manifest.get("repository") != REPOSITORY_URL:
+            failures.append(f"{name} repository must be {REPOSITORY_URL}")
+    if marketplace_plugin.get("homepage") != REPOSITORY_URL:
+        failures.append(f"marketplace plugin homepage must be {REPOSITORY_URL}")
+
+    try:
+        license_text = LICENSE.read_text(encoding="utf-8")
+    except OSError as error:
+        failures.append(f"LICENSE is missing: {error}")
+    else:
+        for phrase in ("MIT License", "Copyright (c) 2026 Luke Steuber", "Permission is hereby granted"):
+            if phrase not in license_text:
+                failures.append(f"LICENSE missing: {phrase!r}")
 
     try:
         readme = README.read_text(encoding="utf-8")
@@ -364,6 +384,10 @@ def main() -> None:
             failures.append("README.md must place ln -s in the guarded install else branch")
         if re.search(r"\bcodex\s+plugin\b", readme, re.IGNORECASE):
             failures.append("README.md must not claim a universal codex plugin CLI command")
+        if "[LICENSE](LICENSE)" not in sections["License"]:
+            failures.append("README.md License section must link to LICENSE")
+        if "has not selected a license" in sections["License"]:
+            failures.append("README.md must not claim that no license is selected")
 
     for name, path in FILES.items():
         if not path.is_file():

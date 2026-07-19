@@ -170,7 +170,7 @@ evidence. Run the validation commands before opening a pull request.
 
 ## License
 
-Luke has not selected a license for this repository.
+MIT. See [LICENSE](LICENSE).
 
 ## Validate a checkout
 
