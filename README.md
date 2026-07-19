@@ -15,7 +15,11 @@ inside one score:
 - cognitive load, waits, context switches, and recovery cost;
 - surface economy without sacrificing discovery or control;
 - accessibility across relevant people and input modes; and
-- frontend integrity across CSS, DOM, events, focus, and state.
+- integrity across accuracy, reversibility, consent, privacy, and consequences of error.
+
+Frontend integrity is a separate causal inspection of CSS, DOM, events, focus, and state.
+It is used to connect implementation conditions to task-path costs without
+redefining the Integrity metric.
 
 ## Add to Codex
 

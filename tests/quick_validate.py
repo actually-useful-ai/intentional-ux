@@ -11,6 +11,12 @@ README = ROOT / "README.md"
 CODEX_MANIFEST = ROOT / ".codex-plugin/plugin.json"
 CLAUDE_MANIFEST = ROOT / ".claude-plugin/plugin.json"
 MARKETPLACE = ROOT / ".claude-plugin/marketplace.json"
+README_INTEGRITY_METRIC = (
+    "integrity across accuracy, reversibility, consent, privacy, and consequences of error."
+)
+README_FRONTEND_INTEGRITY = (
+    "Frontend integrity is a separate causal inspection of CSS, DOM, events, focus, and state."
+)
 FILES = {
     "skill": ROOT / "skills/intentional-ux/SKILL.md",
     "frontend_integrity": ROOT / "skills/intentional-ux/references/frontend-integrity.md",
@@ -213,6 +219,19 @@ def main() -> None:
     else:
         if "will be added in a later change" in readme:
             failures.append("README.md still claims the substantive skill is future work")
+        if README_INTEGRITY_METRIC not in readme:
+            failures.append(
+                "README.md must define the Integrity metric as accuracy, reversibility, "
+                "consent, privacy, and consequences of error"
+            )
+        if README_FRONTEND_INTEGRITY not in readme:
+            failures.append(
+                "README.md must describe frontend integrity as a separate causal inspection"
+            )
+        if "frontend integrity across" in readme.lower():
+            failures.append(
+                "README.md must not conflate frontend integrity with the Integrity metric"
+            )
 
     for name, path in FILES.items():
         if not path.is_file():
