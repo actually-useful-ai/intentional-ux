@@ -49,9 +49,10 @@ For each recommendation, provide:
 4. a trade-off or regression risk; and
 5. an acceptance check using the stated success evidence.
 
-Route semantic and assistive-technology compliance questions to an accessibility
-review, and route accessibility findings back into this task graph when they
-change a path, outcome, or success evidence.
+Use the [accessibility review](references/accessibility-review.md) for semantic
+and assistive-technology compliance, keyboard access, perception, and motion.
+Route its findings back into this task graph when they change a path, outcome,
+or success evidence.
 
 Fewer visible controls improve surface economy only when discovery, keyboard
 access, recovery, and user control remain equal or better. A smaller surface is

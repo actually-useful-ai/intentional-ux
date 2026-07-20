@@ -35,6 +35,7 @@ README_CONTRACT = (
     "| Remediation |",
     "| Verification |",
     "Route semantic and assistive-technology compliance to an accessibility review.",
+    "skills/intentional-ux/references/accessibility-review.md",
 )
 README_SECTIONS = (
     "Measure the path",
@@ -82,6 +83,7 @@ README_HUMANIZE_BANS = (
 FILES = {
     "skill": ROOT / "skills/intentional-ux/SKILL.md",
     "frontend_integrity": ROOT / "skills/intentional-ux/references/frontend-integrity.md",
+    "accessibility_review": ROOT / "skills/intentional-ux/references/accessibility-review.md",
     "graph": ROOT / "skills/intentional-ux/references/task-graph.md",
     "measurement": ROOT / "skills/intentional-ux/references/measurement.md",
     "report_contract": ROOT / "skills/intentional-ux/references/report-contract.md",
@@ -124,6 +126,13 @@ REQUIRED = {
         "State/DOM drift",
         "causal finding",
         "Accessibility review",
+    ],
+    "accessibility_review": [
+        "WCAG 2.2",
+        "Keyboard",
+        "Screen reader",
+        "User testing",
+        "Neither proves",
     ],
     "graph": [
         "Required",
@@ -374,12 +383,11 @@ def main() -> None:
             failures.append("README.md illustrative Fitts row must state absent geometry and no calculation")
 
         validation_section = sections["Validate a checkout"]
-        for command in (
-            "python3 tests/quick_validate.py",
-            "python3 /Users/luke/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py .",
-        ):
+        for command in ("python3 tests/quick_validate.py",):
             if command not in validation_section:
                 failures.append(f"README.md validation section missing command: {command!r}")
+        if "/Users/" in validation_section:
+            failures.append("README.md validation must not contain a machine-specific path")
         if not DIRECT_INSTALL_GUARD.search(readme):
             failures.append("README.md must place ln -s in the guarded install else branch")
         if re.search(r"\bcodex\s+plugin\b", readme, re.IGNORECASE):
@@ -407,7 +415,11 @@ def main() -> None:
         if not (len(skill_lines) >= 5 and skill_lines[0] == "---" and "name:" in skill_lines[1]
                 and skill_lines[3] == "---"):
             failures.append("skills/intentional-ux/SKILL.md has invalid frontmatter")
-        for link in ("references/frontend-integrity.md", "references/report-contract.md"):
+        for link in (
+            "references/accessibility-review.md",
+            "references/frontend-integrity.md",
+            "references/report-contract.md",
+        ):
             if link not in skill.read_text(encoding="utf-8"):
                 failures.append(f"skills/intentional-ux/SKILL.md missing link: {link}")
 
@@ -472,7 +484,10 @@ def main() -> None:
                 failures.append(f"{path.relative_to(ROOT)} missing scenario element: {element!r}")
     if failures:
         raise SystemExit("Validation failed:\n- " + "\n- ".join(failures))
-    print("Validated 8 files: references, task tuple, state graph, metric contract, and scenario artifacts.")
+    print(
+        f"Validated {len(FILES)} files: references, task tuple, state graph, "
+        "metric contract, and scenario artifacts."
+    )
 
 
 if __name__ == "__main__":

@@ -152,6 +152,7 @@ full recommendation fields, fixtures, and review controls.
 | `skills/intentional-ux/SKILL.md` | The concise review workflow. |
 | `skills/intentional-ux/references/task-graph.md` | States, transitions, and hit categories. |
 | `skills/intentional-ux/references/measurement.md` | Vector definitions, units, and evidence limits. |
+| `skills/intentional-ux/references/accessibility-review.md` | Built-in accessibility review and verification matrix. |
 | `skills/intentional-ux/references/frontend-integrity.md` | Causal inspection of frontend conditions. |
 | `skills/intentional-ux/references/report-contract.md` | Recommendation fields and static or runtime fixtures. |
 | `tests/fixtures/` | Checkout and editor review examples. |
@@ -174,12 +175,14 @@ MIT. See [LICENSE](LICENSE).
 
 ## Validate a checkout
 
-Run the structural checks and plugin validation from the repository root:
+Run the structural checks from the repository root:
 
 ```sh
 python3 tests/quick_validate.py
-python3 /Users/luke/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py .
 ```
+
+If your Codex installation includes the plugin-creator validator, you can also
+run its `validate_plugin.py` script against this repository root.
 
 ## Add to Codex
 
