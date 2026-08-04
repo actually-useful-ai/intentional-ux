@@ -324,9 +324,12 @@ def main() -> None:
     if not (
         isinstance(default_prompt, list)
         and default_prompt
+        and len(default_prompt) <= 3
         and all(isinstance(prompt, str) and prompt.strip() for prompt in default_prompt)
     ):
-        failures.append("Codex interface.defaultPrompt must be a non-empty string array")
+        failures.append(
+            "Codex interface.defaultPrompt must contain one to three non-empty strings"
+        )
     if marketplace_plugin.get("source") != "./":
         failures.append("marketplace plugin source must be './'")
     for name, manifest in (("Codex manifest", codex), ("Claude manifest", claude)):
