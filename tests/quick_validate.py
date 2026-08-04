@@ -9,9 +9,11 @@ import re
 ROOT = Path(__file__).resolve().parents[1]
 README = ROOT / "README.md"
 CODEX_MANIFEST = ROOT / ".codex-plugin/plugin.json"
+CURSOR_MANIFEST = ROOT / ".cursor-plugin/plugin.json"
 CLAUDE_MANIFEST = ROOT / ".claude-plugin/plugin.json"
 MARKETPLACE = ROOT / ".claude-plugin/marketplace.json"
 LICENSE = ROOT / "LICENSE"
+EXPECTED_VERSION = "0.2.2"
 REPOSITORY_URL = "https://github.com/actually-useful-ai/intentional-ux"
 README_INTEGRITY_METRIC = (
     "integrity across accuracy, reversibility, consent, privacy, and consequences of error."
@@ -297,6 +299,7 @@ def main() -> None:
     manifests = {}
     for name, path in (
         ("Codex manifest", CODEX_MANIFEST),
+        ("Cursor manifest", CURSOR_MANIFEST),
         ("Claude manifest", CLAUDE_MANIFEST),
         ("marketplace", MARKETPLACE),
     ):
@@ -306,6 +309,7 @@ def main() -> None:
             failures.append(f"{name} is missing or invalid JSON: {error}")
 
     codex = manifests.get("Codex manifest", {})
+    cursor = manifests.get("Cursor manifest", {})
     claude = manifests.get("Claude manifest", {})
     marketplace = manifests.get("marketplace", {})
     marketplace_plugins = marketplace.get("plugins", [])
@@ -315,11 +319,19 @@ def main() -> None:
     for field in ("name", "version", "description"):
         values = {
             "Codex manifest": codex.get(field),
+            "Cursor manifest": cursor.get(field),
             "Claude manifest": claude.get(field),
             "marketplace plugin": marketplace_plugin.get(field),
         }
         if len(set(values.values())) != 1 or None in values.values():
             failures.append(f"manifest {field} values do not match: {values}")
+    if codex.get("version") != EXPECTED_VERSION:
+        failures.append(
+            f"package version must be {EXPECTED_VERSION}, got {codex.get('version')!r}"
+        )
+    for name, manifest in (("Codex manifest", codex), ("Cursor manifest", cursor)):
+        if manifest.get("skills") != "./skills/":
+            failures.append(f"{name} skills path must be './skills/'")
     default_prompt = codex.get("interface", {}).get("defaultPrompt")
     if not (
         isinstance(default_prompt, list)
@@ -332,7 +344,11 @@ def main() -> None:
         )
     if marketplace_plugin.get("source") != "./":
         failures.append("marketplace plugin source must be './'")
-    for name, manifest in (("Codex manifest", codex), ("Claude manifest", claude)):
+    for name, manifest in (
+        ("Codex manifest", codex),
+        ("Cursor manifest", cursor),
+        ("Claude manifest", claude),
+    ):
         if manifest.get("license") != "MIT":
             failures.append(f"{name} license must be MIT")
         if manifest.get("homepage") != REPOSITORY_URL:
