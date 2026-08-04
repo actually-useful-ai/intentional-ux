@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "intentional-ux",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "description": "Analyze interfaces, workflows, and agent capabilities from intention to verified outcome.",
       "source": "./",
       "homepage": "https://github.com/actually-useful-ai/intentional-ux",
