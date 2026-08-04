@@ -1,6 +1,6 @@
 ---
 name: intentional-ux
-description: Use when evaluating or redesigning an interface flow where a person's goal, inputs, evidence of success, and avoidable interaction cost need to be made explicit.
+description: Use when evaluating or redesigning an interface, workflow, or agent capability where a person's goal, inputs, evidence of success, and avoidable interaction cost need to be made explicit.
 ---
 
 # Intentional UX
@@ -66,6 +66,16 @@ connects an implementation condition to a changed task state or success
 evidence; otherwise record the uncertainty. Use the
 [frontend integrity](references/frontend-integrity.md) reference for the checks
 and handoffs.
+
+## Inspect capability experience
+
+Treat skills, plugins, commands, and other agent capabilities as task paths when
+discovery, activation, version selection, authorization, or verification affects
+the outcome. An installed package is not success evidence by itself. Verify that
+the intended source and version resolved, the right behavior activated, and the
+person can observe the requested result. Use the
+[capability experience](references/capability-experience.md) reference for
+runtime, host, trigger, fallback, and source/install checks.
 
 ## Use the report contract
 

@@ -74,6 +74,7 @@ README_PROMPTS = (
     "Map the keyboard checkout path for a returning customer and identify where success evidence becomes uncertain.",
     "Compare a visible formatting menu with a swipe gesture for a touch and keyboard task path.",
     "Inspect dialog focus restoration after a failed destructive action and write a causal finding only if the task path changes.",
+    "Compare the active version of a skill across two hosts and verify which source, trigger, fallback, and task outcome each runtime uses.",
 )
 README_HUMANIZE_BANS = (
     "AI-powered",
@@ -87,9 +88,11 @@ FILES = {
     "graph": ROOT / "skills/intentional-ux/references/task-graph.md",
     "measurement": ROOT / "skills/intentional-ux/references/measurement.md",
     "report_contract": ROOT / "skills/intentional-ux/references/report-contract.md",
+    "capability_experience": ROOT / "skills/intentional-ux/references/capability-experience.md",
     "baseline": ROOT / "tests/fixtures/baseline.md",
     "checkout": ROOT / "tests/fixtures/scenario-1-checkout.md",
     "editor": ROOT / "tests/fixtures/scenario-2-editor.md",
+    "capability": ROOT / "tests/fixtures/scenario-3-capability.md",
 }
 METRICS = (
     "Completion",
@@ -113,6 +116,7 @@ REQUIRED = {
         "semantic and assistive-technology compliance",
         "discovery, keyboard access, recovery, and user control remain equal or better",
         "frontend integrity",
+        "capability experience",
         "report contract",
     ],
     "frontend_integrity": [
@@ -163,11 +167,28 @@ REQUIRED = {
         "false positive",
         "optional",
     ],
+    "capability_experience": [
+        "person/runtime/host -> invoke capability -> intended package resolves -> behavior activates -> outcome -> success evidence",
+        "canonical source repository, commit, or release",
+        "positive trigger",
+        "nearby negative trigger",
+        "missing optional capability",
+        "observable success evidence",
+    ],
     "baseline": [
         "Scenario 1",
         "Scenario 2",
         "Required post-skill evidence",
         TUPLE,
+    ],
+    "capability": [
+        "Luke/Codex/Mac",
+        "Luke/Claude Code/server",
+        "exactly one intended active package",
+        "positive trigger",
+        "nearby negative trigger",
+        "missing-capability fallback",
+        "requested task outcome",
     ],
 }
 
@@ -222,6 +243,7 @@ SCENARIO_SECTIONS = (
 SCENARIO_PROMPTS = {
     "checkout": "one-tap express purchase button ahead of shipping and payment details",
     "editor": "replaces a visible formatting menu with a swipe gesture",
+    "capability": "active version of a skill across a Mac and a server",
 }
 SCENARIO_ELEMENTS = (
     "Required",
@@ -418,6 +440,7 @@ def main() -> None:
         for link in (
             "references/accessibility-review.md",
             "references/frontend-integrity.md",
+            "references/capability-experience.md",
             "references/report-contract.md",
         ):
             if link not in skill.read_text(encoding="utf-8"):
@@ -462,7 +485,7 @@ def main() -> None:
                     f"{path.relative_to(ROOT)} has broken local link: {target!r}"
                 )
 
-    for name in ("checkout", "editor"):
+    for name in ("checkout", "editor", "capability"):
         path = FILES[name]
         if not path.is_file():
             continue
@@ -472,7 +495,7 @@ def main() -> None:
             if section not in content:
                 failures.append(f"{path.relative_to(ROOT)} missing section: {section}")
         tuple_lines = [line for line in content.splitlines() if "->" in line]
-        if not any("/" in line and line.count("->") == 3 for line in tuple_lines):
+        if not any("/" in line and line.count("->") >= 3 for line in tuple_lines):
             failures.append(f"{path.relative_to(ROOT)} does not instantiate a task path")
         if SCENARIO_PROMPTS[name] not in normalized:
             failures.append(f"{path.relative_to(ROOT)} does not preserve its original prompt")
