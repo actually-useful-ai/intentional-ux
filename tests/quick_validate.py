@@ -36,9 +36,12 @@ README_CONTRACT = (
     "| Verification |",
     "Route semantic and assistive-technology compliance to an accessibility review.",
     "skills/intentional-ux/references/accessibility-review.md",
+    "Intentional UX owns the task tuple, state graph, evidence levels, interaction costs, and experience acceptance checks.",
+    "Exemplar can set a higher quality target",
 )
 README_SECTIONS = (
     "Measure the path",
+    "Compose with other skills",
     "Worked example: checkout",
     "Recommendation record",
     "Prompts to try",
@@ -117,6 +120,7 @@ REQUIRED = {
         "discovery, keyboard access, recovery, and user control remain equal or better",
         "frontend integrity",
         "capability experience",
+        "Exemplar sets the quality target",
         "report contract",
     ],
     "frontend_integrity": [
@@ -174,6 +178,8 @@ REQUIRED = {
         "nearby negative trigger",
         "missing optional capability",
         "observable success evidence",
+        "Skill Auditor owns read-only evidence",
+        "Skill Creator owns authorized changes",
     ],
     "baseline": [
         "Scenario 1",
@@ -188,6 +194,7 @@ REQUIRED = {
         "positive trigger",
         "nearby negative trigger",
         "missing-capability fallback",
+        "Exemplar sets the quality target",
         "requested task outcome",
     ],
 }
@@ -346,6 +353,7 @@ def main() -> None:
     except OSError as error:
         failures.append(f"README.md is missing: {error}")
     else:
+        normalized_readme = " ".join(readme.split())
         if "will be added in a later change" in readme:
             failures.append("README.md still claims the substantive skill is future work")
         if README_INTEGRITY_METRIC not in readme:
@@ -362,7 +370,7 @@ def main() -> None:
                 "README.md must not conflate frontend integrity with the Integrity metric"
             )
         for phrase in README_CONTRACT:
-            if phrase not in readme:
+            if phrase not in normalized_readme:
                 failures.append(f"README.md missing field-guide contract: {phrase!r}")
         for prompt in README_PROMPTS:
             if prompt not in readme:

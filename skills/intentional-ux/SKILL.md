@@ -9,6 +9,20 @@ Analyze an experience as a path from a person's intention to evidence that the
 named outcome occurred. Prefer evidence over impressions, and preserve
 uncertainty rather than compressing it into a single UX score.
 
+## Composition contract
+
+Intentional UX owns the task tuple, state graph, evidence levels, interaction
+costs, and experience acceptance checks. The most specific domain skill owns
+implementation. When Exemplar is active, Exemplar sets the quality target and
+anti-performance filter; it does not replace path evidence or relabel an
+Assumed finding as Measured. Chef's Choice may select useful capabilities but
+does not change these ownership boundaries. Accessibility remains authoritative
+for semantic and assistive-technology compliance.
+
+For an exceptional experience pass, use the task graph and evidence to choose
+the highest-value improvement, then require both observable success evidence
+and Exemplar's completion gate.
+
 ## Start with a task
 
 State one tuple for each materially different person or input mode:

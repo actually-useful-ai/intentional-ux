@@ -45,6 +45,16 @@ effort. A package present on disk is an intermediate state, not the outcome.
 Do not label declared metadata as runtime proof. A manifest can state a version
 that the host never loads.
 
+## Composition ownership
+
+Intentional UX verifies the path from discovery through the requested outcome.
+Skill Auditor owns read-only evidence about structure, routing, provenance, and
+source/install drift. Skill Creator owns authorized changes to canonical source,
+packaging, and installation. Exemplar may raise the quality target, but a
+well-presented package is not successful until the intended behavior resolves
+and produces observable task success. Chef's Choice selects capabilities; that
+selection is an intermediate state rather than completion evidence.
+
 ## Acceptance checks
 
 For each supported runtime and host, verify the checks that apply:

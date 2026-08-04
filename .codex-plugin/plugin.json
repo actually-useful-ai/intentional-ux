@@ -1,7 +1,7 @@
 {
   "name": "intentional-ux",
   "version": "0.2.0",
-  "description": "Analyze intention-to-outcome task paths and reduce avoidable interaction cost.",
+  "description": "Analyze interfaces, workflows, and agent capabilities from intention to verified outcome.",
   "license": "MIT",
   "homepage": "https://github.com/actually-useful-ai/intentional-ux",
   "repository": "https://github.com/actually-useful-ai/intentional-ux",
@@ -12,14 +12,15 @@
   "interface": {
     "displayName": "Intentional UX",
     "shortDescription": "Reduce friction from intention to outcome.",
-    "longDescription": "Analyze task paths, interaction costs, accessibility, and frontend integrity to improve completion and time to value.",
+    "longDescription": "Analyze task paths, interaction costs, accessibility, frontend integrity, and capability resolution to improve completion and time to value.",
     "developerName": "Luke Steuber",
     "category": "Productivity",
     "capabilities": [],
     "defaultPrompt": [
       "Analyze this experience from intention to confirmed outcome.",
       "Find avoidable hits, delays, cognitive load, and recovery costs in this task path.",
-      "Review this interface for surface economy, accessibility, and frontend integrity."
+      "Review this interface for surface economy, accessibility, and frontend integrity.",
+      "Verify that this skill resolves to the intended source and produces observable task success."
     ]
   }
 }

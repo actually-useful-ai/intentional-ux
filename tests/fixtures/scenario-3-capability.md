@@ -29,6 +29,10 @@ Wait route: `stale package found -> Wait -> versioned install -> resolution`.
 
 Context switch: `runtime -> plugin directory -> Context switch -> runtime`.
 
+Composition route: `Chef's Choice selects capability -> Intentional UX verifies
+resolution and task evidence -> Exemplar sets the quality target -> domain skill
+executes -> Outcome -> Success evidence`.
+
 ## Metric vector
 
 | Measure | Scenario result | Evidence level |
@@ -72,4 +76,6 @@ runtime resolution does not improve the path.
 - Run a positive trigger, nearby negative trigger, explicit invocation, and
   neighboring-skill composition case.
 - Exercise the missing-capability fallback.
+- Verify that Intentional UX retains task-path and evidence ownership when
+  Exemplar sets the quality target.
 - Verify the requested task outcome on each supported runtime and host.

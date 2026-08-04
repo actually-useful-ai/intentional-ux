@@ -66,6 +66,20 @@ success evidence. The [capability experience
 reference](skills/intentional-ux/references/capability-experience.md) defines the
 evidence and acceptance checks.
 
+## Compose with other skills
+
+Intentional UX owns the task tuple, state graph, evidence levels, interaction
+costs, and experience acceptance checks. A product, design, frontend, or other
+domain skill owns implementation. Exemplar can set a higher quality target and
+remove performative complexity, but it cannot replace task-path evidence or
+turn an Assumed finding into a Measured one. Chef's Choice can select useful
+capabilities. Accessibility remains authoritative for semantic and
+assistive-technology compliance.
+
+For an exceptional experience pass, first make the person's path and success
+evidence explicit. Use that evidence to choose the highest-value improvement,
+then require both observable task success and Exemplar's completion gate.
+
 ## State the evidence
 
 Every finding gets one evidence level. Keep unknowns visible.

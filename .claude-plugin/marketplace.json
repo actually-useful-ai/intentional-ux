@@ -1,6 +1,6 @@
 {
   "name": "intentional-ux",
-  "description": "Tools for analyzing intention-to-outcome task paths and interaction cost.",
+  "description": "Tools for analyzing interfaces, workflows, and capability paths from intention to verified outcome.",
   "owner": {
     "name": "Luke Steuber"
   },
@@ -8,7 +8,7 @@
     {
       "name": "intentional-ux",
       "version": "0.2.0",
-      "description": "Analyze intention-to-outcome task paths and reduce avoidable interaction cost.",
+      "description": "Analyze interfaces, workflows, and agent capabilities from intention to verified outcome.",
       "source": "./",
       "homepage": "https://github.com/actually-useful-ai/intentional-ux",
       "author": {
