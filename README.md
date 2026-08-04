@@ -237,6 +237,16 @@ Add this repository as a marketplace, then install the package:
 /plugin install intentional-ux@intentional-ux
 ```
 
+## Add to Cursor
+
+```sh
+cursor-agent plugin marketplace add https://github.com/actually-useful-ai/intentional-ux
+cursor-agent
+```
+
+Open `/plugin` in the interactive agent and install Intentional UX at user
+scope. The account-scoped installation is then available in the IDE and CLI.
+
 ## Attribution
 
 Created by Luke Steuber.

@@ -1,0 +1,19 @@
+{
+  "name": "intentional-ux",
+  "displayName": "Intentional UX",
+  "owner": {
+    "name": "Luke Steuber"
+  },
+  "metadata": {
+    "description": "Outcome-centered product experience review and design guidance.",
+    "version": "0.2.2"
+  },
+  "plugins": [
+    {
+      "name": "intentional-ux",
+      "source": ".",
+      "description": "Design and review complete person-to-outcome paths.",
+      "version": "0.2.2"
+    }
+  ]
+}

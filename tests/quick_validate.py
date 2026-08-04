@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 README = ROOT / "README.md"
 CODEX_MANIFEST = ROOT / ".codex-plugin/plugin.json"
 CURSOR_MANIFEST = ROOT / ".cursor-plugin/plugin.json"
+CURSOR_MARKETPLACE = ROOT / ".cursor-plugin/marketplace.json"
 CLAUDE_MANIFEST = ROOT / ".claude-plugin/plugin.json"
 MARKETPLACE = ROOT / ".claude-plugin/marketplace.json"
 LICENSE = ROOT / "LICENSE"
@@ -300,6 +301,7 @@ def main() -> None:
     for name, path in (
         ("Codex manifest", CODEX_MANIFEST),
         ("Cursor manifest", CURSOR_MANIFEST),
+        ("Cursor marketplace", CURSOR_MARKETPLACE),
         ("Claude manifest", CLAUDE_MANIFEST),
         ("marketplace", MARKETPLACE),
     ):
@@ -310,6 +312,7 @@ def main() -> None:
 
     codex = manifests.get("Codex manifest", {})
     cursor = manifests.get("Cursor manifest", {})
+    cursor_marketplace = manifests.get("Cursor marketplace", {})
     claude = manifests.get("Claude manifest", {})
     marketplace = manifests.get("marketplace", {})
     marketplace_plugins = marketplace.get("plugins", [])
@@ -344,6 +347,14 @@ def main() -> None:
         )
     if marketplace_plugin.get("source") != "./":
         failures.append("marketplace plugin source must be './'")
+    cursor_plugins = cursor_marketplace.get("plugins", [])
+    cursor_plugin = cursor_plugins[0] if len(cursor_plugins) == 1 else {}
+    if cursor_marketplace.get("name") != "intentional-ux":
+        failures.append("Cursor marketplace name must be intentional-ux")
+    if cursor_marketplace.get("metadata", {}).get("version") != EXPECTED_VERSION:
+        failures.append("Cursor marketplace version must match the package")
+    if cursor_plugin.get("name") != "intentional-ux" or cursor_plugin.get("source") != ".":
+        failures.append("Cursor marketplace must expose intentional-ux from '.'")
     for name, manifest in (
         ("Codex manifest", codex),
         ("Cursor manifest", cursor),
