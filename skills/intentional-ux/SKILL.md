@@ -1,6 +1,6 @@
 ---
 name: intentional-ux
-description: Use when evaluating or redesigning an interface flow where a person's goal, inputs, evidence of success, and avoidable interaction cost need to be made explicit.
+description: Use when evaluating or redesigning an interface, workflow, or agent capability where a person's goal, inputs, evidence of success, and avoidable interaction cost need to be made explicit.
 ---
 
 # Intentional UX
@@ -8,6 +8,20 @@ description: Use when evaluating or redesigning an interface flow where a person
 Analyze an experience as a path from a person's intention to evidence that the
 named outcome occurred. Prefer evidence over impressions, and preserve
 uncertainty rather than compressing it into a single UX score.
+
+## Composition contract
+
+Intentional UX owns the task tuple, state graph, evidence levels, interaction
+costs, and experience acceptance checks. The most specific domain skill owns
+implementation. When Exemplar is active, Exemplar sets the quality target and
+anti-performance filter; it does not replace path evidence or relabel an
+Assumed finding as Measured. Chef's Choice may select useful capabilities but
+does not change these ownership boundaries. Accessibility remains authoritative
+for semantic and assistive-technology compliance.
+
+For an exceptional experience pass, use the task graph and evidence to choose
+the highest-value improvement, then require both observable success evidence
+and Exemplar's completion gate.
 
 ## Start with a task
 
@@ -66,6 +80,16 @@ connects an implementation condition to a changed task state or success
 evidence; otherwise record the uncertainty. Use the
 [frontend integrity](references/frontend-integrity.md) reference for the checks
 and handoffs.
+
+## Inspect capability experience
+
+Treat skills, plugins, commands, and other agent capabilities as task paths when
+discovery, activation, version selection, authorization, or verification affects
+the outcome. An installed package is not success evidence by itself. Verify that
+the intended source and version resolved, the right behavior activated, and the
+person can observe the requested result. Use the
+[capability experience](references/capability-experience.md) reference for
+runtime, host, trigger, fallback, and source/install checks.
 
 ## Use the report contract
 

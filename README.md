@@ -58,6 +58,28 @@ an affected state or success evidence. See [frontend
 integrity](skills/intentional-ux/references/frontend-integrity.md) for the
 inspection boundary.
 
+Agent capabilities have a task path too. A skill or plugin can be present on
+disk while the wrong version resolves, its trigger collides, or the requested
+result remains unverified. For these reviews, name the runtime and host in the
+task tuple, then inspect discovery, resolution, activation, fallback, and
+success evidence. The [capability experience
+reference](skills/intentional-ux/references/capability-experience.md) defines the
+evidence and acceptance checks.
+
+## Compose with other skills
+
+Intentional UX owns the task tuple, state graph, evidence levels, interaction
+costs, and experience acceptance checks. A product, design, frontend, or other
+domain skill owns implementation. Exemplar can set a higher quality target and
+remove performative complexity, but it cannot replace task-path evidence or
+turn an Assumed finding into a Measured one. Chef's Choice can select useful
+capabilities. Accessibility remains authoritative for semantic and
+assistive-technology compliance.
+
+For an exceptional experience pass, first make the person's path and success
+evidence explicit. Use that evidence to choose the highest-value improvement,
+then require both observable task success and Exemplar's completion gate.
+
 ## State the evidence
 
 Every finding gets one evidence level. Keep unknowns visible.
@@ -144,6 +166,7 @@ full recommendation fields, fixtures, and review controls.
 - Map the keyboard checkout path for a returning customer and identify where success evidence becomes uncertain.
 - Compare a visible formatting menu with a swipe gesture for a touch and keyboard task path.
 - Inspect dialog focus restoration after a failed destructive action and write a causal finding only if the task path changes.
+- Compare the active version of a skill across two hosts and verify which source, trigger, fallback, and task outcome each runtime uses.
 
 ## Repository map
 
@@ -154,8 +177,9 @@ full recommendation fields, fixtures, and review controls.
 | `skills/intentional-ux/references/measurement.md` | Vector definitions, units, and evidence limits. |
 | `skills/intentional-ux/references/accessibility-review.md` | Built-in accessibility review and verification matrix. |
 | `skills/intentional-ux/references/frontend-integrity.md` | Causal inspection of frontend conditions. |
+| `skills/intentional-ux/references/capability-experience.md` | Skill, plugin, and command paths from source resolution to verified outcome. |
 | `skills/intentional-ux/references/report-contract.md` | Recommendation fields and static or runtime fixtures. |
-| `tests/fixtures/` | Checkout and editor review examples. |
+| `tests/fixtures/` | Checkout, editor, and capability review examples. |
 
 ## Scope
 
