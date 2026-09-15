@@ -2,6 +2,8 @@
 
 Intentional UX examines the latency between intention and outcome. It helps product teams, designers, and frontend developers turn a journey into an inspectable task path, name avoidable interaction cost, and tie a recommendation back to its evidence.
 
+[![Read the guide](https://img.shields.io/badge/Read-Guide-2563eb?style=flat-square)](#reading-path) [![MIT code license](https://img.shields.io/badge/Code-MIT-181717?style=flat-square)](LICENSE) [![Actually Useful AI collection](https://img.shields.io/badge/Actually_Useful_AI-Collection-181717?style=flat-square)](https://github.com/actually-useful-ai)
+
 Start with the task. Measure its path. Record the trade-offs. The deeper
 implementation detail lives in the linked references.
 
@@ -247,6 +249,9 @@ cursor-agent
 Open `/plugin` in the interactive agent and install Intentional UX at user
 scope. The account-scoped installation is then available in the IDE and CLI.
 
-## Attribution
+## Around here
 
-Created by Luke Steuber.
+[Luke Steuber](https://github.com/lukeslp) · [Data Poems](https://github.com/data-poems) · [Ambient Time](https://github.com/ambient-time) · [Actually Useful AI](https://github.com/actually-useful-ai) · [One Impossible Thing](https://github.com/one-impossible-thing)
+
+Made by [Luke Steuber](https://lukesteuber.com). Questions or collaboration:
+[luke@lukesteuber.com](mailto:luke@lukesteuber.com).
