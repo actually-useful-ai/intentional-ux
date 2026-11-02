@@ -12,7 +12,9 @@ whether a person can complete the task.
 2. Complete the task with a keyboard. Check visible focus, logical order, focus
    movement, escape routes, and restoration after transient interfaces.
 3. Check text alternatives, captions, contrast, non-color cues, text spacing,
-   forced colors, 200% zoom, and reflow.
+   forced colors, 200% zoom, and reflow. Never let red versus green alone carry
+   meaning: pair status color with text, an icon, a pattern, or position, and
+   choose chart and status palettes that stay distinct under deuteranopia.
 4. Prefer recognition over recall. Make state, errors, next actions, and recovery
    clear without unnecessary time pressure or interruption.
 5. Respect reduced-motion preferences and provide alternatives to dragging,
@@ -29,6 +31,7 @@ whether a person can complete the task.
 | Keyboard | Full task with Tab, Shift+Tab, Enter, Space, Escape, and arrow keys. | Does not expose every screen-reader or visual barrier. |
 | Screen reader | Names, roles, landmarks, reading order, focus, and announcements. | Results vary by browser and assistive-technology combination; record both. |
 | Zoom and reflow | 200% zoom, narrow viewport, text spacing, and forced colors. | Does not assess every task or language need. |
+| Color vision | Task states, charts, and errors under simulated deuteranopia, protanopia, tritanopia, and grayscale (for example, the browser's rendering emulation). Every state stays distinguishable without hue. | Simulation approximates common color vision types; it does not replace testing with people who have them. |
 | User testing | Realistic tasks with disabled people using relevant input methods. | A small sample does not represent every person or context. |
 
 ## Finding record

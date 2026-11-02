@@ -14,7 +14,7 @@ CURSOR_MARKETPLACE = ROOT / ".cursor-plugin/marketplace.json"
 CLAUDE_MANIFEST = ROOT / ".claude-plugin/plugin.json"
 MARKETPLACE = ROOT / ".claude-plugin/marketplace.json"
 LICENSE = ROOT / "LICENSE"
-EXPECTED_VERSION = "0.2.2"
+EXPECTED_VERSION = "0.2.3"
 REPOSITORY_URL = "https://github.com/actually-useful-ai/intentional-ux"
 README_INTEGRITY_METRIC = (
     "integrity across accuracy, reversibility, consent, privacy, and consequences of error."
@@ -144,6 +144,9 @@ REQUIRED = {
         "Screen reader",
         "User testing",
         "Neither proves",
+        "Color vision",
+        "deuteranopia",
+        "red versus green",
     ],
     "graph": [
         "Required",
