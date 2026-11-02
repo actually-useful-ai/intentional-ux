@@ -32,13 +32,25 @@ person/input mode -> start -> outcome -> success evidence
 ```
 
 Examples of input mode include touch, pointer, keyboard, voice, and switch
-access. “Success evidence” is the observable confirmation the person needs, not
-just a system state change.
+access. Treat perception differences the same way: add a tuple for color vision
+deficiency, low vision, or a grayscale display when it changes what a person
+can perceive. “Success evidence” is the observable confirmation the person
+needs, not just a system state change.
 
 Then model the path as a state graph. Include the ordinary path plus any
 confirmation, wait, correction, recovery, abandonment, and context-switch
 states that can change completion or effort. See
 [task graph](references/task-graph.md).
+
+## Color is never the only signal
+
+Every state, status, selection, error, chart series, and piece of success
+evidence must stay distinguishable without hue. Pair color with text, an icon,
+a shape, a pattern, or position, and never let red versus green alone carry
+meaning. Check palettes and states under simulated deuteranopia, protanopia,
+tritanopia, and grayscale. Apply this in every phase of the review: the task
+graph, frontend integrity, measurement, the report, and capability output
+such as terminal status.
 
 ## Use a metric vector
 

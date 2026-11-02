@@ -14,7 +14,7 @@ CURSOR_MARKETPLACE = ROOT / ".cursor-plugin/marketplace.json"
 CLAUDE_MANIFEST = ROOT / ".claude-plugin/plugin.json"
 MARKETPLACE = ROOT / ".claude-plugin/marketplace.json"
 LICENSE = ROOT / "LICENSE"
-EXPECTED_VERSION = "0.2.3"
+EXPECTED_VERSION = "0.2.4"
 REPOSITORY_URL = "https://github.com/actually-useful-ai/intentional-ux"
 README_INTEGRITY_METRIC = (
     "integrity across accuracy, reversibility, consent, privacy, and consequences of error."
@@ -125,6 +125,8 @@ REQUIRED = {
         "capability experience",
         "Exemplar sets the quality target",
         "report contract",
+        "Color is never the only signal",
+        "color vision",
     ],
     "frontend_integrity": [
         "Cascade layer order",
@@ -135,6 +137,7 @@ REQUIRED = {
         "Event cleanup",
         "Focus restoration",
         "State/DOM drift",
+        "Color-only state",
         "causal finding",
         "Accessibility review",
     ],
@@ -156,6 +159,7 @@ REQUIRED = {
         "Wait",
         "Context-switch",
         "Success evidence",
+        "without hue",
     ],
     "measurement": [
         "log2(D/W + 1)",
@@ -163,6 +167,7 @@ REQUIRED = {
         "Do not collapse the vector into a single score",
         "Accessibility",
         "Integrity",
+        "color vision",
     ],
     "report_contract": [
         "Affected people",
@@ -176,6 +181,7 @@ REQUIRED = {
         "Runtime-review fixture",
         "false positive",
         "optional",
+        "color-vision modes",
     ],
     "capability_experience": [
         "person/runtime/host -> invoke capability -> intended package resolves -> behavior activates -> outcome -> success evidence",
@@ -186,6 +192,7 @@ REQUIRED = {
         "observable success evidence",
         "Skill Auditor owns read-only evidence",
         "Skill Creator owns authorized changes",
+        "never by color alone",
     ],
     "baseline": [
         "Scenario 1",

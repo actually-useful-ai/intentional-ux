@@ -18,7 +18,7 @@ Every recommendation must include all of these fields.
 | Confidence | High, medium, or low, plus what evidence would raise or lower it. |
 | Causal finding | `evidence -> implementation condition -> affected task state -> outcome delay or risk`; do not state causation that the evidence does not support. |
 | Remediation | The smallest accountable change, including ownership when it crosses design, frontend, or accessibility work. |
-| Verification | An acceptance check against the stated success evidence, including the people and input modes that must pass. |
+| Verification | An acceptance check against the stated success evidence, including the people, input modes, and color-vision modes that must pass. |
 
 Route semantic and assistive-technology compliance to an accessibility review.
 Bring barriers, alternate paths, and compliance results back into the task graph

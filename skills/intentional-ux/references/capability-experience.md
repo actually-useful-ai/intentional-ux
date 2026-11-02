@@ -28,7 +28,8 @@ effort. A package present on disk is an intermediate state, not the outcome.
 - **Surface:** plugin directories, command lists, prompts, descriptions, and
   status displays that help or hinder discovery.
 - **Accessibility:** equivalent discovery, invocation, status, and recovery for
-  relevant input modes and assistive technology.
+  relevant input modes and assistive technology. Report status with words or
+  symbols such as pass, fail, ✓, or ✗, never by color alone.
 - **Integrity:** source provenance, version accuracy, permission boundaries,
   reversibility, secret handling, and the consequences of running the wrong
   capability.

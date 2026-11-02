@@ -1,7 +1,7 @@
 {
   "name": "intentional-ux",
   "displayName": "Intentional UX",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Analyze interfaces, workflows, and agent capabilities from intention to verified outcome.",
   "author": {
     "name": "Luke Steuber"

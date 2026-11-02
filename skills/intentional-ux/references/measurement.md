@@ -13,7 +13,7 @@ single score: different measures expose different trade-offs.
 | Wait | Duration and frequency of blocked or unproductive waiting. | Separate interface delay from voluntary reading or deliberation. |
 | Recovery | Error, interruption, and lost-context paths; time and success of return. | A rare severe failure can matter more than its average rate suggests. |
 | Surface | Visible controls, hierarchy, and visual competition for the task. | Fewer visible controls help only when discovery, keyboard access, recovery, and user control remain equal or better. |
-| Accessibility | Barriers and alternate paths by input mode. | Route semantic and assistive-technology compliance to accessibility review. |
+| Accessibility | Barriers and alternate paths by input mode and perception mode, including color vision. | Route semantic and assistive-technology compliance to accessibility review. |
 | Integrity | Accuracy, reversibility, consent, privacy, and consequences of error. | Do not trade integrity away merely to reduce time or hits. |
 
 ## Evidence levels
