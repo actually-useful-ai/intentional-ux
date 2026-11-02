@@ -42,6 +42,9 @@ corrective hit is often a signal to inspect discovery, mapping, or feedback.
 ## Graph review
 
 - Ensure every outcome path reaches success evidence or explicitly lacks it.
+- Confirm that each state change and its success evidence can be perceived
+  without hue. A state that differs only by color is missing for people with a
+  color vision deficiency; record it as a barrier on their tuple.
 - Model alternate input modes when navigation, target access, or feedback differs.
 - Keep recovery distinct from correction: recovery restores a usable path;
   correction fixes task content or choice.

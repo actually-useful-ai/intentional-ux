@@ -28,6 +28,7 @@ universal.
 | --- | --- | --- | --- |
 | Cascade layer order | Ordered `@layer` declarations, imports, and which layer wins for the affected element. | An unintended layer precedence changes a task-relevant state, feedback, target, or recovery control. | Do not infer precedence from stylesheet filename or source order outside the declared layers. |
 | Selector duplication | Repeated selectors and overlapping declarations across files or layers. | Competing declarations produce inconsistent states or hide the intended owner of a task-relevant rule. | A repeated selector is not a defect when it intentionally supplies a variant, fallback, or documented override. Compare the winning declarations. |
+| Color-only state | Status, selection, error, focus, and data-series tokens, plus the non-color cue (text, icon, shape, pattern, or position) paired with each. | Two task-relevant states differ only by hue, or a pair such as red and green becomes indistinguishable under simulated deuteranopia, protanopia, tritanopia, or grayscale. | Decorative color is not a finding. A state that already carries a redundant non-color cue passes even when its hues converge. |
 | Custom-property ownership | Where a token is defined, inherited, overridden, and consumed. | An ambiguous or leaking owner changes a control’s state, contrast, spacing, or feedback on the affected path. | Do not flag an inherited property merely because its definition is distant; verify its resolved value and documented scope. |
 
 ## DOM, event, focus, and state checks
