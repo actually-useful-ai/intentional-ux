@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Outcome-centered product experience review and design guidance.",
-    "version": "0.2.2"
+    "version": "0.2.3"
   },
   "plugins": [
     {
       "name": "intentional-ux",
       "source": ".",
       "description": "Design and review complete person-to-outcome paths.",
-      "version": "0.2.2"
+      "version": "0.2.3"
     }
   ]
 }
